@@ -1,0 +1,137 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API Listrik Pascabayar",
+        "description": "Dokumentasi API untuk sistem tagihan listrik pascabayar",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/tagihan": {
+            "get": {
+                "tags": [
+                    "Tagihan"
+                ],
+                "summary": "Menampilkan semua data tagihan",
+                "operationId": "0004c5a13ab6b8ea4d9719a98f890f4f",
+                "responses": {
+                    "200": {
+                        "description": "Data tagihan berhasil diambil"
+                    }
+                }
+            }
+        },
+        "/api/tagihan/generate": {
+            "post": {
+                "tags": [
+                    "Tagihan"
+                ],
+                "summary": "Generate tagihan berdasarkan data penggunaan",
+                "operationId": "4491c9e80e1d046fb9d6ac7e34cf85a4",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "penggunaan_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "jumlah_meter": {
+                                        "type": "integer",
+                                        "example": 100
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Tagihan berhasil dibuat"
+                    },
+                    "400": {
+                        "description": "Data tidak valid"
+                    }
+                }
+            }
+        },
+        "/api/tagihan/{id}": {
+            "put": {
+                "tags": [
+                    "Tagihan"
+                ],
+                "summary": "Update data tagihan",
+                "operationId": "ea43b0f72ec9d18124cd7d10ddb1830e",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID tagihan yang akan diupdate",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "status": {
+                                        "type": "string",
+                                        "example": "Sudah Bayar"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Data tagihan berhasil diupdate"
+                    },
+                    "404": {
+                        "description": "Tagihan tidak ditemukan"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Tagihan"
+                ],
+                "summary": "Hapus data tagihan",
+                "operationId": "899e7c3fcc91e98cb38669319404c8b1",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID tagihan yang akan dihapus",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Tagihan berhasil dihapus"
+                    },
+                    "404": {
+                        "description": "Tagihan tidak ditemukan"
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Tagihan",
+            "description": "Operasi seputar data tagihan"
+        }
+    ]
+}
