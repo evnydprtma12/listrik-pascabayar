@@ -178,7 +178,7 @@ http://127.0.0.1:8000/api/documentation
 ![Dashboard Petugas](docs/screenshots/petugas/dashboard%20petugas.png)
 ![Lihat Pelanggan](docs/screenshots/petugas/lihat%20pelanggan.png)
 ![Lihat Tarif](docs/screenshots/petugas/lihat%20daftar%20tarif.png)
-![Manajemen Penggunaan Listrik](docs/screenshots/petugas/manajemen%20penggunaan%201.png)
+![Manajemen Penggunaan Listrik](docs/screenshots/petugas/manajemen%20penggunaan%201%20.png)
 ![Manajemen Penggunaan Listrik](docs/screenshots/petugas/manajemen%20penggunaan%202.png)
 ![Manajemen Tagihan Listrik](docs/screenshots/petugas/manajemen%20tagihan%201.png)
 ![Manajemen Tagihan Listrik](docs/screenshots/petugas/manajemen%20tagihan%202.png)
