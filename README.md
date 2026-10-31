@@ -49,8 +49,8 @@ tarifs ──< pelanggan ──< penggunaan ──1:1── tagihan ──< pemb
 ### 1. Clone repository dan install dependensi
 
 ```bash
-git clone <URL-REPOSITORY-ANDA>
-cd <NAMA-FOLDER-REPOSITORY>
+git clone https://github.com/evnydprtma12/listrik-pascabayar
+cd listrik-pascabayar
 
 composer install
 npm install
@@ -159,9 +159,6 @@ http://127.0.0.1:8000/api/documentation
 
 ## Tampilan Aplikasi
 
-> Tambahkan screenshot atau video demo di sini. Simpan gambar di folder `docs/screenshots/` lalu tampilkan seperti contoh:
-
-```markdown
 ![Halaman Login](docs/screenshots/login.png)
 
 ![Dashboard Admin](docs/screenshots/admin/dashboardadmin.png)
@@ -187,7 +184,7 @@ http://127.0.0.1:8000/api/documentation
 ![Manajemen Tagihan Listrik](docs/screenshots/petugas/manajemen%20tagihan%202.png)
 ![Manajemen Pembayaran Listrik](docs/screenshots/petugas/manajemen%20pembayaran%201.png)
 ![Manajemen Pembayaran Listrik](docs/screenshots/petugas/manajemen%20pembayaran%202.png)
-```
+
 
 ## Catatan
 
