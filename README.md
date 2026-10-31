@@ -1,61 +1,200 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Aplikasi Pembayaran Listrik Pascabayar
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Aplikasi web berbasis **Laravel** untuk mengelola pembayaran listrik pascabayar: data pelanggan, tarif, pemakaian meter bulanan, tagihan, hingga pencatatan pembayaran. Aplikasi memiliki pembagian hak akses untuk **Administrator** dan **Petugas**.
 
-## About Laravel
+Project ini dibuat sebagai tugas perkuliahan Program Studi Teknologi Informasi, Universitas Bina Sarana Informatika (Depok).
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+> **Catatan:** Aplikasi ini membutuhkan server PHP dan database, sehingga **tidak dapat dijalankan lewat GitHub Pages**. Ikuti langkah instalasi lokal di bawah, atau lihat bagian [Tampilan Aplikasi](#tampilan-aplikasi).
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Fitur
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+| Peran | Fitur |
+| --- | --- |
+| **Administrator** | Dashboard, kelola user, kelola pelanggan, kelola tarif, kelola data penggunaan (meter awal dan akhir), kelola tagihan (termasuk buat tagihan dari data penggunaan), kelola pembayaran |
+| **Petugas** | Dashboard, melihat data pelanggan dan tarif, kelola data penggunaan, tagihan, dan pembayaran |
+| **Pelanggan** | Dashboard, riwayat penggunaan, tagihan saya, bayar tagihan, riwayat pembayaran, profil *(masih dalam pengembangan, lihat bagian Catatan)* |
 
-## Learning Laravel
+Fitur tambahan:
+- Dokumentasi API dengan Swagger (`l5-swagger`) dan Scramble
+- Endpoint API untuk dashboard dan tagihan (`routes/api.php`)
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Teknologi
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+| Komponen | Keterangan |
+| --- | --- |
+| Bahasa | PHP ^8.2 |
+| Framework | Laravel ^12.0 |
+| Database | MySQL (juga bisa memakai SQLite) |
+| Frontend | Blade, Tailwind CSS 4, Vite |
+| Dokumentasi API | `darkaonline/l5-swagger`, `dedoc/scramble` |
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Struktur Database
 
-## Laravel Sponsors
+Tabel utama: `level`, `users`, `tarifs`, `pelanggan`, `penggunaan`, `tagihan`, `pembayaran`.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+```
+level ──< users
+tarifs ──< pelanggan ──< penggunaan ──1:1── tagihan ──< pembayaran
+```
 
-### Premium Partners
+## Kebutuhan Sistem
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+- PHP 8.2 atau lebih baru (disarankan memakai [XAMPP](https://www.apachefriends.org/) versi PHP 8.2+)
+- [Composer](https://getcomposer.org/)
+- [Node.js](https://nodejs.org/) dan npm
+- MySQL (bawaan XAMPP) atau SQLite
 
-## Contributing
+## Instalasi Lokal
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### 1. Clone repository dan install dependensi
 
-## Code of Conduct
+```bash
+git clone <URL-REPOSITORY-ANDA>
+cd <NAMA-FOLDER-REPOSITORY>
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+composer install
+npm install
+npm run build
+```
 
-## Security Vulnerabilities
+### 2. Siapkan file environment
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```bash
+# Linux / macOS
+cp .env.example .env
 
-## License
+# Windows (Command Prompt)
+copy .env.example .env
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+php artisan key:generate
+```
+
+### 3. Atur database
+
+**Opsi A: MySQL (XAMPP)**
+
+1. Jalankan Apache dan MySQL dari XAMPP.
+2. Buka phpMyAdmin, lalu buat database baru bernama `listrikpascabayar`.
+3. Ubah bagian database di file `.env`:
+
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=listrikpascabayar
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
+**Opsi B: SQLite (lebih cepat, tanpa MySQL)**
+
+Biarkan `DB_CONNECTION=sqlite` di `.env`, lalu buat file database kosong:
+
+```bash
+# Linux / macOS
+touch database/database.sqlite
+
+# Windows (Command Prompt)
+type nul > database\database.sqlite
+```
+
+### 4. Jalankan migrasi dan seeder
+
+```bash
+php artisan migrate --seed
+```
+
+Perintah ini membuat semua tabel dan dua akun awal (lihat [Akun Login](#akun-login)). Data tarif dan pelanggan contoh dapat ditambahkan dengan:
+
+```bash
+php artisan db:seed --class=TarifSeeder
+php artisan db:seed --class=PelangganSeeder
+```
+
+> Jalankan `TarifSeeder` terlebih dahulu karena data pelanggan memerlukan tarif.
+
+### 5. Jalankan aplikasi
+
+```bash
+php artisan serve
+```
+
+Buka **http://127.0.0.1:8000** di browser. Halaman utama otomatis mengarah ke halaman login.
+
+## Akun Login
+
+Akun berikut dibuat oleh seeder (untuk keperluan demonstrasi):
+
+| Peran | Username | Password |
+| --- | --- | --- |
+| Administrator | `admin` | `password` |
+| Petugas | `petugas` | `password` |
+
+Ubah password tersebut jika aplikasi dipakai di luar keperluan demonstrasi.
+
+## Dokumentasi API
+
+Setelah aplikasi berjalan, dokumentasi Swagger dapat dibuka di:
+
+```
+http://127.0.0.1:8000/api/documentation
+```
+
+## Struktur Folder
+
+```
+├── app/
+│   ├── Http/Controllers/     # Controller (Auth, Tarif, Pelanggan, Penggunaan, Tagihan, Pembayaran, User, Dashboard)
+│   ├── Http/Middleware/      # AdminMiddleware, PetugasMiddleware
+│   └── Models/               # Level, User, Tarif, Pelanggan, Penggunaan, Tagihan, Pembayaran
+├── database/
+│   ├── migrations/           # Struktur tabel
+│   └── seeders/              # Data awal
+├── resources/views/          # Tampilan Blade (admin, petugas, pelanggan, tagihan, pembayaran, dll.)
+├── routes/
+│   ├── web.php               # Route halaman web
+│   └── api.php               # Route API
+└── public/                   # Entry point aplikasi
+```
+
+## Tampilan Aplikasi
+
+> Tambahkan screenshot atau video demo di sini. Simpan gambar di folder `docs/screenshots/` lalu tampilkan seperti contoh:
+
+```markdown
+![Halaman Login](docs/screenshots/login.png)
+
+![Dashboard Admin](docs/screenshots/admin/dashboardadmin.png)
+![Manajemen User](docs/screenshots/admin/daftar%20user%201.png)
+![Tambah User](docs/screenshots/admin/daftar%20user%202)
+![Manajemen Pelanggan](docs/screenshots/admin/daftar%20pelanggan%201.png)
+![Tambah Pelanggan](docs/screenshots/admin/daftar%20pelanggan%202.png)
+![Manajemen Tarif](docs/screenshots/admin/daftar%20tarif%201.png)
+![Tambah Tarif](docs/screenshots/admin/daftar%20tarif%202.png)
+![Manajemen Penggunaan Listrik](docs/screenshots/admin/manajemen%20penggunaan%20listrik%201.png)
+![Tambah Penggunaan Listrik](docs/screenshots/admin/manajemen%20penggunaan%20listrik%201.png)
+![Manajemen Tagihan Listrik](docs/screenshots/admin/daftar%20tagihan%20listrik%201.png)
+![Tambah Tagihan Listrik](docs/screenshots/admin/daftar%20tagihan%20listrik%202.png)
+![Manajemen Pembayaran](docs/screenshots/admin/Daftar%20Pembayaran%201.png)
+![Tambah Pembayaran](docs/screenshots/admin/Daftar%20Pembayaran%202.png)
+
+![Dashboard Petugas](docs/screenshots/petugas/dashboard%20petugas.png)
+![Lihat Pelanggan](docs/screenshots/petugas/lihat%20pelanggan.png)
+![Lihat Tarif](docs/screenshots/petugas/lihat%20daftar%20tarif.png)
+![Manajemen Penggunaan Listrik](docs/screenshots/petugas/manajemen%20penggunaan%201.png)
+![Manajemen Penggunaan Listrik](docs/screenshots/petugas/manajemen%20penggunaan%202.png)
+![Manajemen Tagihan Listrik](docs/screenshots/petugas/manajemen%20tagihan%201.png)
+![Manajemen Tagihan Listrik](docs/screenshots/petugas/manajemen%20tagihan%202.png)
+![Manajemen Pembayaran Listrik](docs/screenshots/petugas/manajemen%20pembayaran%201.png)
+![Manajemen Pembayaran Listrik](docs/screenshots/petugas/manajemen%20pembayaran%202.png)
+```
+
+## Catatan
+
+- Portal **pelanggan** belum selesai: route `pelanggan/*` memakai guard `auth:pelanggan` yang belum didefinisikan di `config/auth.php`, dan controller login pelanggan belum tersedia di project ini.
+- File `.env`, folder `vendor/`, dan `node_modules/` tidak disertakan di repository. Buat ulang dengan langkah instalasi di atas.
+
+## Kontak
+
+- **Nama:** [Evan Yudi Pratama]
+- **Email:** [evanyudipratama12@gmail.com]
